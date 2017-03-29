@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public class CheckUtil {
 
-	private static final String token = "chenggaowei";
+	private static final String token = "liu923014086";
 
 	public static boolean checkSignature(String signature, String timestamp, String nonce) {
 
