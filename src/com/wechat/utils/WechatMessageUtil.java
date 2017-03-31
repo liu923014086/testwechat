@@ -2,6 +2,7 @@ package com.wechat.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.robotChat.HttpClientUtil;
 import com.thoughtworks.xstream.XStream;
 import com.wechat.entity.vo.wechat.message.TextMessage;
 
@@ -74,6 +76,12 @@ public class WechatMessageUtil {
 	 * 事件推送消息中,自定义菜单事件,点击菜单跳转链接时的事件推送
 	 */
 	public static final String MESSAGE_EVENT_VIEW = "VIEW";
+	
+	
+	/**
+	 * 获取token的url
+	 */
+	private static String getTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
 
 	/**
 	 * 将xml转化为Map集合
@@ -122,5 +130,24 @@ public class WechatMessageUtil {
 		return xstream.toXML(textMessage);
 
 	}
+	
+	 /**
+	  * @desc 获取授权token
+	  * @param appid
+	  * @param secret
+	  * @return
+	  */
+	 public static String getAccessToken(String appid, String secret) {
+	  String accessToken = null;
+	  try {
+	   System.out.println(("getAccessToken start.{appid=" + appid + ",secret:" + secret + "}"));
+	   String url = MessageFormat.format(getTokenUrl, appid, secret);
+	   String response = HttpClientUtil.doGet(url);
+	   accessToken = JsonUtil.read(response, "access_token");
+	  } catch (Exception e) {
+	   System.err.println("get access toekn exception"+e);
+	  }
+	  return accessToken;
+	 }
 
 }
