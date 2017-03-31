@@ -27,6 +27,8 @@
 package com.robotChat;
 
 import java.io.File;
+import java.io.InputStream;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -39,6 +41,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import com.wechat.utils.JsonUtil;
 import com.wechat.utils.WechatMessageUtil;
 
 /**
@@ -47,11 +50,11 @@ import com.wechat.utils.WechatMessageUtil;
 public class ClientMultipartFormPost {
 
     public static void main(String[] args) throws Exception {
-       
+        
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
         	String appid = "wxa9f27b15ba93cab7";
-        	String secret = "lihucs0203";
+        	String secret = "17017122ed89f23428ac217569c39ae0";
         	String accessToken = WechatMessageUtil.getAccessToken(appid, secret);
         	System.out.println("accessToken="+accessToken);
             HttpPost httppost = new HttpPost("https://api.weixin.qq.com/cgi-bin/media/upload?access_token="+accessToken+"&type=image");
@@ -71,9 +74,21 @@ public class ClientMultipartFormPost {
             CloseableHttpResponse response = httpclient.execute(httppost);
             try {
                 System.out.println("----------------------------------------");
+                
                 System.out.println(response.getStatusLine());
                 HttpEntity resEntity = response.getEntity();
-                if (resEntity != null) {
+                
+                if (resEntity != null) { 
+                	InputStream content = resEntity.getContent(); 
+                    byte[] bytes = new byte[content.available()];
+                    content.read(bytes);
+                    String responseMsg = new String(bytes);
+                  //  System.err.println(responseMsg);
+                    Map<String, Object> jsonToMap = JsonUtil.jsonToMap(responseMsg);
+                    Integer errcode = (Integer) jsonToMap.get("errcode");
+                    String errmsg = (String) jsonToMap.get("errmsg");
+                    System.out.println("errcode="+errcode);
+                    System.out.println("errmsg="+errmsg);
                     System.out.println("Response content length: " + resEntity.getContentLength());
                 }
                 EntityUtils.consume(resEntity);
