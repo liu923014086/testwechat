@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.photeDetact.FaceService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +42,23 @@ public class WechatService {
 		// 默认回复一个"success"
 		String responseMessage = "success";
 		// 对消息进行处理
+		TextMessage textMessage = new TextMessage();
+		textMessage.setToUserName(fromUserName);
+		textMessage.setFromUserName(toUserName);
+		textMessage.setCreateTime(System.currentTimeMillis());
+		textMessage.setMsgType(WechatMessageUtil.MESSAGE_TEXT);
 		if (WechatMessageUtil.MESSAGE_TEXT.equals(msgType)) {// 文本消息
-			TextMessage textMessage = new TextMessage();
-			textMessage.setMsgType(WechatMessageUtil.MESSAGE_TEXT);
-			textMessage.setToUserName(fromUserName);
-			textMessage.setFromUserName(toUserName);
-			textMessage.setCreateTime(System.currentTimeMillis());
 			textMessage.setContent(responseMessage2);
-			responseMessage = WechatMessageUtil.textMessageToXml(textMessage);
+
+		}else if(WechatMessageUtil.MESSAtGE_IMAGE.equalsIgnoreCase(msgType)){
+			// 取得图片地址
+			String picUrl = map.get("PicUrl");
+			// 人脸检测
+			String detectResult = FaceService.detect(picUrl);
+			textMessage.setContent(detectResult);
 		}
+
+		responseMessage = WechatMessageUtil.textMessageToXml(textMessage);
 		log.info(responseMessage);
 		return responseMessage;
 
