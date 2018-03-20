@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="testwechat:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/testwechat_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="testwechat" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="testwechat/web/Web" />
+    </root>
+  </artifact>
+</component>
