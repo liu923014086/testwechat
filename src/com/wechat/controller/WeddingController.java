@@ -1,9 +1,6 @@
 package com.wechat.controller;
 
-import com.wechat.entity.po.Wedding;
-import com.wechat.entity.po.WeddingImage;
-import com.wechat.entity.po.WeddingMainInfo;
-import com.wechat.entity.po.WeddingZanLog;
+import com.wechat.entity.po.*;
 import com.wechat.service.wechat.WechatService;
 import com.wechat.utils.CheckUtil;
 import net.sf.json.JSONObject;
@@ -55,6 +52,18 @@ public class WeddingController {
 			}
 
 			w.setMsg("点赞成功");
+			w.setSuccess(true);
+		}
+
+		//////////////////////chat
+		String words = request.getParameter("words");
+		if(words!=null&&!"".equals(words)){
+			w.setChatNum(1);
+			Chat chat = new Chat();
+			chat.setFace(face);
+			chat.setNickname(nickname);
+			chat.setWords(words);
+			w.getChatList().add(chat);
 		}
 
 

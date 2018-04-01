@@ -1,0 +1,27 @@
+################首页
+music_url、  username(做主键)
+        ###############WeddingImage
+        image
+
+        ###############WeddingMainInfo
+                mainInfo.setHe("刘大侠");
+        		mainInfo.setShe("王小珍");
+        		mainInfo.setAddress("beijing");
+        		mainInfo.setDate("2018-05-01");
+        		mainInfo.setLunar("十六");
+        		mainInfo.setAddress("大辛");
+        		mainInfo.setHe_tel("18518366652");
+        		mainInfo.setShe_tel("13161632053");
+        		################酒店导航
+        		mainInfo.setLat(116.335853f);
+        		mainInfo.setLng(40.002578f);
+################邀请函
+
+
+
+################好友祝福
+nickname、face
+
+################留言评论
+nickname、face、words
+

@@ -20,8 +20,37 @@ public class Wedding {
     private List<WeddingZanLog> zanLog = new ArrayList<WeddingZanLog>();
     private Integer zanNum;
     private String msg;
+    private boolean success;
 
 
+    //chat
+    private Integer chatNum;
+    private List<Chat> chatList = new ArrayList<Chat>();
+
+
+    public Integer getChatNum() {
+        return chatNum;
+    }
+
+    public void setChatNum(Integer chatNum) {
+        this.chatNum = chatNum;
+    }
+
+    public List<Chat> getChatList() {
+        return chatList;
+    }
+
+    public void setChatList(List<Chat> chatList) {
+        this.chatList = chatList;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
     public List<WeddingZanLog> getZanLog() {
         return zanLog;
